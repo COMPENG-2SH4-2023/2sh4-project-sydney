@@ -12,7 +12,6 @@ using namespace std;
 // in advanced OOD, you don't need global variable
 GameMechs* myGM;
 Player* myPlayer;
-
 objPos myPos;
 
 bool exitFlag;

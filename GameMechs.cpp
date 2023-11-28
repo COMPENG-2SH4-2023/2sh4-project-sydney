@@ -8,7 +8,7 @@ GameMechs::GameMechs()
     input = 0;
     exitFlag = false;
     // default board size
-    boardSizeX = 20; // columns
+    boardSizeX = 30; // columns
     boardSizeY = 10; // rows
 
     foodPos.setObjPos(-1, -1, 'o'); // initialize foodPos outside of the game board (so to not be displayed)
