@@ -25,7 +25,12 @@ GameMechs::GameMechs(int boardX, int boardY)
 }
 
 // do you need a destructor?
-
+GameMechs::~GameMechs()
+{
+    // Deallocate all heap data members
+    // Defense against memory leakage
+    // May not be needed if you do not have heap data members.
+}
 
 
 bool GameMechs::getExitFlagStatus()

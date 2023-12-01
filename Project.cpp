@@ -68,6 +68,8 @@ void GetInput(void)
 
 void RunLogic(void)
 {
+    char input = myGM->getInput();
+    
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
 
@@ -116,7 +118,6 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     MacUILib_clearScreen();    
-  
     MacUILib_uninit();
 
     // remove heap instances
