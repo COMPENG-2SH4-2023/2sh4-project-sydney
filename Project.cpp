@@ -68,33 +68,60 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    char input = myGM->getInput();
+    // char input = myGM->getInput();
     
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
 
-    myGM->clearInput(); // so to not repeatedly process the input
+    // Check if the player has reached the food
+    objPos tempPos;
+    objPos foodPos;
+    myPlayer->getPlayerPos(tempPos);
+    myGM->getFoodPos(foodPos);
+
+    if (tempPos.isPosEqual(&foodPos))
+    {
+        // Player reached the food, generate a new food position
+        myGM->generateFood(tempPos);
+        myGM->incrementScore();
+    }
+
+    myGM->clearInput(); // so not to repeatedly process the input
 }
 
 void DrawScreen(void)
 {
-    MacUILib_clearScreen(); 
+    MacUILib_clearScreen();
 
     objPos tempPos;
+    objPos foodPos;
+
     myPlayer->getPlayerPos(tempPos); // get player pos
 
-    for(int i = 0; i < myGM->getBoardSizeY(); i++)
+    if (!myGM->hasFoodGeneratedThisFrame())
     {
-        for(int j = 0; j < myGM->getBoardSizeX(); j++)
+        myGM->generateFood(tempPos);
+    }
+
+    myGM->getFoodPos(foodPos);
+
+    for (int i = 0; i < myGM->getBoardSizeY(); i++)
+    {
+        for (int j = 0; j < myGM->getBoardSizeX(); j++)
         {
             // draw border
-            if(i == 0 || i == myGM->getBoardSizeY() - 1 || j == 0 || j == myGM->getBoardSizeX() - 1)
+            if (i == 0 || i == myGM->getBoardSizeY() - 1 || j == 0 || j == myGM->getBoardSizeX() - 1)
             {
                 MacUILib_printf("%c", '#');
             }
-            else if(j == tempPos.x && i == tempPos.y)
+            else if (j == tempPos.x && i == tempPos.y)
             {
                 MacUILib_printf("%c", tempPos.symbol);
+            }
+            // include food into draw routine
+            else if (j == foodPos.x && i == foodPos.y)
+            {
+                MacUILib_printf("%c", foodPos.getSymbol());
             }
             else
             {
@@ -103,7 +130,8 @@ void DrawScreen(void)
         }
         MacUILib_printf("\n");
     }
-    
+
+
     MacUILib_printf("Score: %d, Player Pos: <%d, %d>\n", myGM->getScore(), tempPos.x, tempPos.y, tempPos.symbol);
     // Because we are  using the async input in MacUILib, we have to use MacUILib_printf() instead of cout
 
