@@ -126,19 +126,6 @@ void Player::movePlayer()
     }
     else
     {
-        /*
-        // if score is greater than size of playerList, insert new head
-        if(mainGameMechsRef->getScore() >= playerPosList->getSize())
-        {
-            playerPosList->insertHead(currHead);
-        }
-
-        // insert new head and remove tail
-        else
-        {
-            playerPosList->insertHead(currHead);
-            playerPosList->removeTail();
-        }*/
 
         for (int i = 1; i < playerPosList->getSize(); i++)
         {
@@ -147,7 +134,6 @@ void Player::movePlayer()
             if (currHead.isPosEqual(&tempBody))
             {
                 mainGameMechsRef->setLoseFlag();
-                mainGameMechsRef->setExitTrue();
                 return;
             }
         }

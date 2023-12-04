@@ -158,6 +158,12 @@ void DrawScreen(void)
     MacUILib_printf("Food Pos: <%d, %d>\n", tempFoodPos.x, tempFoodPos.y);
     // Because we are  using the async input in MacUILib, we have to use MacUILib_printf() instead of cout
 
+    if (myGM->getLoseFlagStatus())
+    {
+        MacUILib_clearScreen();
+        MacUILib_printf("YOU LOST!!!!\n");
+         MacUILib_printf("Press ESC to exit.");
+    }
 }
 
 void LoopDelay(void)
