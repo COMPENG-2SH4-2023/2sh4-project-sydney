@@ -16,7 +16,7 @@ objPosArrayList::~objPosArrayList()
     // otherwise, only the first element will be properly deleted, leading to leak
 }
 
-int objPosArrayList::getSize()
+int objPosArrayList::getSize() const
 {
     return listSize;
 }
@@ -100,7 +100,7 @@ void objPosArrayList::getTailElement(objPos &returnPos)
         returnPos.setObjPos(aList[listSize - 1]);
 }
 
-void objPosArrayList::getElement(objPos &returnPos, int index)
+void objPosArrayList::getElement(objPos &returnPos, int index) const
 {
     if (index >= 0 && index < listSize)
         returnPos.setObjPos(aList[index]);

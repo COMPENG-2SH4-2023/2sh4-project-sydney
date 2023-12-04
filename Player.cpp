@@ -1,9 +1,8 @@
 #include "Player.h"
 
 
-Player::Player(GameMechs* thisGMRef)
+Player::Player(GameMechs* thisGMRef) : mainGameMechsRef(thisGMRef)
 {
-    mainGameMechsRef = thisGMRef;
     myDir = STOP;
 
     // more actions to be included
@@ -114,11 +113,33 @@ void Player::movePlayer()
             break;  
     }
 
-    // new current head should be inserted to the head of the list
-    playerPosList->insertHead(currHead);
+    // if new head position overlaps with food
+    objPos tempFoodPos;
+    mainGameMechsRef->getFoodPos(tempFoodPos);
+
+    // if player reaches food, generate new food position
+    if(currHead.isPosEqual(&tempFoodPos))
+    {
+        mainGameMechsRef->generateFood(currHead);
+        mainGameMechsRef->incrementScore();
+    }
+    else
+    {
+        // if score is greater than size of playerList, insert new head
+        if(mainGameMechsRef->getScore() >= playerPosList->getSize())
+        {
+            playerPosList->insertHead(currHead);
+        }
+
+        // insert new head and remove tail
+        else
+        {
+            playerPosList->insertHead(currHead);
+            playerPosList->removeTail();
+        }
+    }
+
     
-    // then, remove tail
-    playerPosList->removeTail();
 
 }
 

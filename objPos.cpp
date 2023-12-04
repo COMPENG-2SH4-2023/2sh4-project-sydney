@@ -46,7 +46,7 @@ char objPos::getSymbol()
     return symbol;
 }
 
-bool objPos::isPosEqual(const objPos* refPos)
+bool objPos::isPosEqual(const objPos* refPos) const
 {
     return (refPos->x == x && refPos->y == y);
 }

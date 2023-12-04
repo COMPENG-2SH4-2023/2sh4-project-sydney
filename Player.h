@@ -23,6 +23,7 @@ class Player
         void updatePlayerDir();
         void movePlayer();
 
+
         // need more actions in here 
         // after inserting the head but before removing the tail
         // - check if new head position collides with food

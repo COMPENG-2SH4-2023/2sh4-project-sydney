@@ -52,6 +52,9 @@ void Initialize(void)
     myGM = new GameMechs(26, 13); // make the board size 26x13
     myPlayer =  new Player(myGM);
 
+    objPos tempPos(-1,-1,'o');
+    myGM->generateFood(tempPos);
+
     // Think about when to generate the new food...
 
     // Think about whether you want to set up a debug key to call the 

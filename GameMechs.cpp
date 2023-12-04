@@ -97,7 +97,7 @@ void GameMechs::incrementScore()
     score++;
 }
 
-void GameMechs::generateFood(const objPos& blockOff)
+void GameMechs::generateFood(const objPos& playerPos)
 {
     // generate random x and y coord, make sure they are NOT boarder or blockOff pos.
 
@@ -108,20 +108,22 @@ void GameMechs::generateFood(const objPos& blockOff)
 
     srand(time(NULL)); // outputting pseudo-random-numbers
 
-    while(true)
+    while (true)
     {
         int foodX = rand() % (boardSizeX - 2) + 1;
         int foodY = rand() % (boardSizeY - 2) + 1;
 
+        // check if food overlaps with the player
         objPos tempPos(foodX, foodY, ' ');
 
-        if (!tempPos.isPosEqual(&blockOff))
+        // check if food overlaps with the player
+        if (!playerPos.isPosEqual(&tempPos))
         {
             foodPos.setObjPos(foodX, foodY, 'o');
             foodGeneratedThisFrame = true; // Set the flag when food is generated
             return; // Exit the function after generating food
         }
-    } 
+    }
 
     foodGeneratedThisFrame = false;
 
