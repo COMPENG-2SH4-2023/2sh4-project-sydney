@@ -5,11 +5,9 @@ Player::Player(GameMechs* thisGMRef) : mainGameMechsRef(thisGMRef)
 {
     myDir = STOP;
 
-    // more actions to be included
     objPos tempPos;
     tempPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2, mainGameMechsRef->getBoardSizeY()/2, '@');
 
-    // no deap member yet - never used new keyword
     playerPosList = new objPosArrayList();
     playerPosList->insertHead(tempPos);
 
@@ -18,14 +16,11 @@ Player::Player(GameMechs* thisGMRef) : mainGameMechsRef(thisGMRef)
 
 Player::~Player()
 {
-    // delete any heap members here
-    // we can leave empty for now.
     delete playerPosList;
 }
 
 objPosArrayList* Player::getPlayerPos()
 {
-    // return the reference to the playerPos arrray list
     return playerPosList;
 
 }
@@ -34,37 +29,30 @@ void Player::updatePlayerDir()
 {
     // PPA3 input processing logic 
 
-    // where do i get the input? how do i check for inputs?
-    // Hint 1: definitely not by calling MacUILib_getChar()
-    // Hint 2: coordinate with your team member  who's designing 
-    //         GameMechanism class
-    // Hint 3: There will be a method in GameMechanism class that 
-    //         collectively checks input and stores the most recent 
-    //         input. You just need to figure out how do to get to 
-    //         it...
-
-    // How?? It lies within the GameMechs* inside your private member
-
     char input = mainGameMechsRef->getInput();
 
     if(input != 0)
         switch(input)
         {
+            // move up
             case 'w':
                 if (myDir != UP && myDir != DOWN)
                     myDir = UP;
                 break;
-            
+
+            // move left
             case 'a':
                 if (myDir != LEFT && myDir != RIGHT)
                     myDir = LEFT;
                 break;
-            
+
+            // move down
             case 's':
                 if (myDir != UP && myDir != DOWN)
                     myDir = DOWN;
                 break;
 
+            // move right
             case 'd':
                 if(myDir != LEFT && myDir != RIGHT)
                     myDir = RIGHT;
@@ -105,7 +93,7 @@ void Player::movePlayer()
         case DOWN:
             currHead.y++;
             if (currHead.y >= mainGameMechsRef->getBoardSizeY() - 1)
-                currHead.y = 1;  // Change this line
+                currHead.y = 1;  
             break;
         
         case STOP:
@@ -126,31 +114,30 @@ void Player::movePlayer()
     }
     else
     {
-
+        // check collision with player's body
         for (int i = 1; i < playerPosList->getSize(); i++)
         {
             objPos tempBody;
             playerPosList->getElement(tempBody, i);
+            // if head pos collides with player body
             if (currHead.isPosEqual(&tempBody))
             {
+                // end game (user lost)
                 mainGameMechsRef->setLoseFlag();
-                return;
+                return; // exit loop and function = game is lost
             }
         }
 
         if (mainGameMechsRef->getScore() >= playerPosList->getSize())
         {
+            // if score is greater than size, insert new head without removing tail
             playerPosList->insertHead(currHead);
         }
         else
         {
+            // score is same, remove tail to keep constant length
             playerPosList->insertHead(currHead);
             playerPosList->removeTail();
         }
     }
 }
-
- bool Player::checkSelfCollision()
- {
-
- }
