@@ -113,6 +113,7 @@ void Player::movePlayer()
             break;  
     }
 
+    
     // if new head position overlaps with food
     objPos tempFoodPos;
     mainGameMechsRef->getFoodPos(tempFoodPos);
@@ -125,6 +126,7 @@ void Player::movePlayer()
     }
     else
     {
+        /*
         // if score is greater than size of playerList, insert new head
         if(mainGameMechsRef->getScore() >= playerPosList->getSize())
         {
@@ -136,10 +138,33 @@ void Player::movePlayer()
         {
             playerPosList->insertHead(currHead);
             playerPosList->removeTail();
+        }*/
+
+        for (int i = 1; i < playerPosList->getSize(); i++)
+        {
+            objPos tempBody;
+            playerPosList->getElement(tempBody, i);
+            if (currHead.isPosEqual(&tempBody))
+            {
+                mainGameMechsRef->setLoseFlag();
+                mainGameMechsRef->setExitTrue();
+                return;
+            }
+        }
+
+        if (mainGameMechsRef->getScore() >= playerPosList->getSize())
+        {
+            playerPosList->insertHead(currHead);
+        }
+        else
+        {
+            playerPosList->insertHead(currHead);
+            playerPosList->removeTail();
         }
     }
-
-    
-
 }
 
+ bool Player::checkSelfCollision()
+ {
+
+ }

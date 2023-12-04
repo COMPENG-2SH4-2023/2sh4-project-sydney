@@ -23,6 +23,8 @@ class Player
         void updatePlayerDir();
         void movePlayer();
 
+        bool checkSelfCollision();
+
 
         // need more actions in here 
         // after inserting the head but before removing the tail
